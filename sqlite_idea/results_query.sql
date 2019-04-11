@@ -12,4 +12,5 @@ FROM hostdata
 INNER JOIN portdata 
 ON hostdata.uuid = portdata.uuid 
 where hostdata.uuid = '1af6effd-ff62-4130-8058-ebe5f218bb27'
-AND hostdata.ip = portdata.ip;
+AND hostdata.ip = portdata.ip
+ORDER BY ip ASC;
