@@ -3,7 +3,6 @@ package main
 import (
 	"database/sql"
 	"encoding/xml"
-	"fmt"
 	"github.com/google/uuid"
 	"io/ioutil"
 	"log"
@@ -27,21 +26,28 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("%s\n", scanID.String())
-	fmt.Printf("%s\n", nmapContent.Args)
-	fmt.Printf("%s\n", nmapContent.Startstr)
-	fmt.Printf("%s\n", nmapContent.Scaninfo.Type)
-	fmt.Printf("%s\n", nmapContent.Scaninfo.Protocol)
-	fmt.Printf("%s\n", nmapContent.Scaninfo.Services)
-	fmt.Printf("%s\n", nmapContent.Runstats.Finished.Timestr)
-	fmt.Printf("%s\n", nmapContent.Runstats.Finished.Summary)
 
-	database, err := sql.Open("sqlite3", "./sqlite_idea/dbtest1.db")
+	database, err := sql.Open("sqlite3", "dbtest1.db")
 	if err != nil {
 		log.Fatalf("sql.Open error: %v", err)
 	}
+
+	sqlDBCreation, err := ioutil.ReadFile("nmapdata.db.sql")
+	if err != nil {
+		log.Fatalf("ioutil.ReadFile err: %v", err)
+	}
+
+	// if tables haven't been created, then create them TODO: test
+	statement, err := database.Prepare(string(sqlDBCreation))
+	if err != nil {
+		log.Fatalf("database.Prepare table creation error: %v", err)
+	}
+	statement.Exec()
+
+
+
 	// SCANDATA
-	statement, err := database.Prepare("INSERT INTO scandata (uuid, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+	statement, err = database.Prepare("INSERT INTO scandata (uuid, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		log.Fatalf("scandata table - database.Prepare error: %v", err)
 	}
