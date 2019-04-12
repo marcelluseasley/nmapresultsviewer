@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<data-sources>
-	<data-source id="sqlite_jdbc-16a08b173a8-4659ae0943624623" provider="generic" driver="sqlite_jdbc" name="SQLite - nmapdata.db.sql" save-password="true" read-only="false">
-		<connection server="" database="/home/marcellus/go/src/github.com/marcelluseasley/nmaproject/sqlite_idea/nmapdata.db.sql" url="jdbc:sqlite:/home/marcellus/go/src/github.com/marcelluseasley/nmaproject/sqlite_idea/nmapdata.db.sql" type="dev"/>
-	</data-source>
-	<filters/>
-</data-sources>
