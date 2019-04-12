@@ -3,22 +3,66 @@
 
 <HEAD>
    <TITLE>NMAP Scan Results</TITLE>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </HEAD>
 
 <BODY>
    <div class="container">
-      <h2>NMAP Results Viewer (XML)</h2>
+      <h1>NMAP Results Viewer (XML)</h1>
+
+      <p>
+         <h5 class="h5">Scan ID: {{.Scan.UUIDScan }}</h5>
+         <h6 class="h6">Scan Arguments: {{.Scan.Scanargs }}</h6>
+         <h6 class="h6">Scan Start Time: {{.Scan.Scanstart }}</h6>
+         <h6 class="h6">Scan End Time: {{.Scan.Scanend }}</h6>
+         <h6 class="h6">Scan Type: {{.Scan.Scantype }}</h6>
+         <h6 class="h6">Scan Protocol: {{.Scan.Scanprotocol }}</h6>
+         <h6 class="h6">Scan Services: {{.Scan.Scanservices }}</h6>
+         <h6 class="h6">Scan Summary: {{.Scan.Summary }}</h6>
+</p>
       
-      <p>{{.Scan.UUIDScan }}</p>
-      <p>{{.Scan.Scanargs }}</p>
-      {{ range .Rows }}
-        {{ range $index, $element := .}}{{$index}}
-            <p>{{range $element}}{{.IP}}</p>
-        {{ end }}
-      {{ end }}
+      {{ range $r_index, $r_element := .Rows }}
+      <strong>IP: {{$r_index}}</strong>
+      <table class="table table-bordered table-sm">
+         <thead class="thead-dark">
+            <tr>
+               <th>Port</th>
+               <th>Service</th>
+               <th>Port State</th>
+               <th>Reason</th>
+               <th>Method</th>
+            </tr>
+         </thead>
+         <tbody class="table table-striped">
+
+            {{ range $p_index, $p_element := $r_element}}
+
+            <tr>
+               <td>{{$p_element.Port}}</td>
+               <td>{{$p_element.Service}}</td>
+               <td>{{$p_element.PState}}</td>
+               <td>{{$p_element.PReason}}</td>
+               <td>{{$p_element.Method}}</td>
+            </tr>
+            {{ end }}
+         </tbody>
+      </table>
+      <br /><br />
+      {{end}}
+
+
+
    </div>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
 </BODY>
 
 </HTML>
