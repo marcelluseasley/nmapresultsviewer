@@ -1,6 +1,6 @@
-# Bishop Fox Coding Challenge
+# REST API Nmap scan result
 
-## REST API Nmap scan result
+## Go Version / System Info
 
 * Go runtime used: `go1.12.3 linux/amd64`
 * Operating System: `Linux parrot 4.19.0-parrot1-20t-amd64 #1 SMP Parrot 4.19.20-2parrot1.20t (2019-03-09) x86_64 GNU/Linux`
