@@ -55,7 +55,7 @@ func uuidResultsHandler(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Println("found uuid! generate UI page")
 
-		var td TemplateData
+		var TD TemplateData
 		var ips []string
 		database, err := sql.Open("sqlite3", "dbtest1.db")
 		if err != nil {
@@ -78,9 +78,9 @@ ORDER BY ip;
 
 		}
 		fmt.Println(ips)
-		td.Rows = make(map[string][]RowData)
+		TD.Rows = make(map[string][]RowData)
 		for _, ii := range ips {
-			td.Rows[ii] = []RowData{}
+			TD.Rows[ii] = []RowData{}
 		}
 
 		rowsScan, err := database.Query(fmt.Sprintf(`
@@ -95,7 +95,7 @@ WHERE scandata.uuid = '%s'
 		for rowsScan.Next() {
 			rowsScan.Scan(&uuidScan, &scanargs, &scanstart, &scantype, &scanprotocol, &scanservices, &scanend, &summary)
 			s := ScanData{uuidScan, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary}
-			td.Scan = s
+			TD.Scan = s
 			fmt.Println(s)
 
 		}
@@ -131,7 +131,7 @@ WHERE scandata.uuid = '%s'
 				temp = append(temp, RowData{uuidHost, ip, hostState, hReason, hostname, port, pState, pReason, service, method})
 
 			}
-			td.Rows[ipr] = temp
+			TD.Rows[ipr] = temp
 			temp = nil
 		}
 
@@ -139,7 +139,7 @@ WHERE scandata.uuid = '%s'
 		if err != nil {
 			log.Printf("Error opening nmapresults template: %v", err)
 		}
-		err = t.Execute(w, td)
+		err = t.Execute(w, TD)
 		if err != nil {
 			log.Printf("Error executing nmapresults template: %v", err)
 		}
