@@ -1,21 +1,29 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 
-	"database/sql"
-
 	"github.com/gorilla/mux"
-
 	_ "github.com/mattn/go-sqlite3"
 )
 
 func uuidResultsHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	if vars["uuid"] == "" || !uuidScanLookup(vars["uuid"]) {
-		log.Printf("no scan results with: %s", vars["uuid"])
+	// if no uuid or uuid not found in database, redirect to index page
+	if vars["uuid"] == "" || !uuidScanLookup(vars["uuid"]) { 
+		t, err := template.ParseFiles("templates/index.html")
+		if err != nil {
+			log.Printf("Error opening index template: %v", err)
+		}
+		
+		err = t.Execute(w, nil)
+		if err != nil {
+			log.Printf("Error executing index template: %v", err)
+		}
 	} else {
 		log.Println("found it!")
 	}

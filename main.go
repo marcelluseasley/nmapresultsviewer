@@ -32,39 +32,39 @@ func main() {
 		log.Fatalf("sql.Open error: %v", err)
 	}
 
-	sqlDBCreation, err := ioutil.ReadFile("nmapdata.db.sql")
-	if err != nil {
-		log.Fatalf("ioutil.ReadFile err: %v", err)
-	}
+	// sqlDBCreation, err := ioutil.ReadFile("nmapdata.db.sql")
+	// if err != nil {
+	// 	log.Fatalf("ioutil.ReadFile err: %v", err)
+	// }
 
-	// if tables haven't been created, then create them TODO: test
-	statement, err := database.Prepare(string(sqlDBCreation))
-	if err != nil {
-		log.Fatalf("database.Prepare table creation error: %v", err)
-	}
-	statement.Exec()
+	// // if tables haven't been created, then create them TODO: test
+	// statement, err := database.Prepare(string(sqlDBCreation))
+	// if err != nil {
+	// 	log.Fatalf("database.Prepare table creation error: %v", err)
+	// }
+	// statement.Exec()
 
 
 
 	// SCANDATA
-	statement, err = database.Prepare("INSERT INTO scandata (uuid, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-	if err != nil {
-		log.Fatalf("scandata table - database.Prepare error: %v", err)
-	}
+	// statement, err = database.Prepare("INSERT INTO scandata (uuid, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+	// if err != nil {
+	// 	log.Fatalf("scandata table - database.Prepare error: %v", err)
+	// }
 
-	_, err = statement.Exec(
-		scanID.String(),
-		nmapContent.Args,
-		nmapContent.Startstr,
-		nmapContent.Scaninfo.Type,
-		nmapContent.Scaninfo.Protocol,
-		nmapContent.Scaninfo.Services,
-		nmapContent.Runstats.Finished.Timestr,
-		nmapContent.Runstats.Finished.Summary)
+	// _, err = statement.Exec(
+	// 	scanID.String(),
+	// 	nmapContent.Args,
+	// 	nmapContent.Startstr,
+	// 	nmapContent.Scaninfo.Type,
+	// 	nmapContent.Scaninfo.Protocol,
+	// 	nmapContent.Scaninfo.Services,
+	// 	nmapContent.Runstats.Finished.Timestr,
+	// 	nmapContent.Runstats.Finished.Summary)
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 	// HOSTDATA
 	statement, err = database.Prepare("INSERT INTO hostdata (uuid, ip, host_state, reason, hostname) VALUES (?, ?, ?, ?, ?)")
 	if err != nil {
