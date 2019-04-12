@@ -1,13 +1,11 @@
 package main
 
-
 import (
 	"database/sql"
+	_ "github.com/mattn/go-sqlite3"
 	"io/ioutil"
 	"log"
-	_ "github.com/mattn/go-sqlite3"
 )
-
 
 func createdatabase() {
 
@@ -21,14 +19,13 @@ func createdatabase() {
 		log.Fatalf("ioutil.ReadFile err: %v", err)
 	}
 
-	// if tables haven't been created, then create them 
-	
-	
+	// if tables haven't been created, then create them
+
 	_, err = database.Exec(string(sqlDBCreation))
 	if err != nil {
 		log.Fatalf("database.Exec table creation error: %v", err)
 	}
-	
+
 	database.Close()
 
 }

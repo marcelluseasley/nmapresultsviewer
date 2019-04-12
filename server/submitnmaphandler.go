@@ -3,10 +3,10 @@ package main
 import (
 	"database/sql"
 	"encoding/xml"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
-	"fmt"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -185,9 +185,8 @@ func submitNMAPHandler(w http.ResponseWriter, r *http.Request) {
 		{
 			"scan-id": "%s"
 		}
-		`,scanID.String())
-		fmt.Fprintf(w,uuidJSONResponse)
-		
+		`, scanID.String())
+		fmt.Fprintf(w, uuidJSONResponse)
 
 	} else if r.Method == "GET" {
 		t, err := template.ParseFiles("templates/index.html")

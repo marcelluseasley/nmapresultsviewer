@@ -3,20 +3,37 @@
 
 <HEAD>
    <TITLE>NMAP Scan</TITLE>
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </HEAD>
 
 <BODY>
    <div class="container">
       <h1>NMAP Results Viewer (XML)</h1>
       <p>To correctly use the NMAP Results viewer, please upload your Nmap scan results in the XML format to:</p>
-      <blockquote>
-         <script>document.write(window.location.host)</script>/v1/nmap</blockquote>
+      <code>
+         <script>document.write(window.location.host)</script>/v1/nmap
+      </code><br />
       <p>One way to do this is via a curl command:</p>
-      <code>curl <script>document.write(window.location.host)</script>/v1/nmap --upload-file [scanresults.xml]</code>
-      
+      <code>
+         curl <script>document.write(window.location.host)</script>/v1/nmap --upload-file [scanresults.xml]
+      </code>
+      <p>The API response will be JSON:</p>
+      <pre><code>
+{
+   "scan-id": "589c048e-cca7-4686-9d70-5a4bd07669f5"
+}</code></pre>
+
    </div>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
 </BODY>
 
 </HTML>
