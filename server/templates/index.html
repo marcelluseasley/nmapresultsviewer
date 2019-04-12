@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+
+<HEAD>
+   <TITLE>NMAP Scan</TITLE>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</HEAD>
+
+<BODY>
+   <div class="container">
+      <h1>NMAP Results Viewer (XML)</h1>
+      <p>To correctly use the NMAP Results viewer, please upload your Nmap scan results in the XML format to:</p>
+      <blockquote>
+         <script>document.write(window.location.host)</script>/v1/nmap</blockquote>
+      <p>One way to do this is via a curl command:</p>
+      <code>curl <script>document.write(window.location.host)</script>/v1/nmap --upload-file [scanresults.xml]</code>
+      
+   </div>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</BODY>
+
+</HTML>
