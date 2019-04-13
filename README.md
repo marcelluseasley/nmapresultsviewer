@@ -72,7 +72,7 @@ The response will be a JSON response:
 }
 ```
 
-You can view the results of the scan by taking this `scan-id` (really just a UUID assigned to each different scan import) and vising the following URL:
+You can view the results of the scan by taking this `scan-id` (really just a UUID assigned to each different scan import) and visiting the following URL:
 
 ```
 http://[SERVER_URL]/589c048e-cca7-4686-9d70-5a4bd07669f5
