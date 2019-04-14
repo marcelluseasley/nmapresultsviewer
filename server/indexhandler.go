@@ -1,4 +1,4 @@
-package main
+package nmapserver
 
 import (
 	"html/template"
@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("templates/index.html")
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	t, err := template.ParseFiles("server/templates/index.html")
 	if err != nil {
 		log.Printf("Error opening index template: %v", err)
 	}

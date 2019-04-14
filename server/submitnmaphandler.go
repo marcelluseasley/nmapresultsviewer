@@ -1,4 +1,4 @@
-package main
+package nmapserver
 
 import (
 	"database/sql"
@@ -100,7 +100,7 @@ type Nmaprun struct {
 }
 
 // curl http://myservice --upload-file file.txt
-func submitNMAPHandler(w http.ResponseWriter, r *http.Request) {
+func SubmitNMAPHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "PUT" {
 		var scanID uuid.UUID
 		scanID = uuid.New()
@@ -189,7 +189,7 @@ func submitNMAPHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, uuidJSONResponse)
 
 	} else if r.Method == "GET" {
-		t, err := template.ParseFiles("templates/index.html")
+		t, err := template.ParseFiles("server/templates/index.html")
 		if err != nil {
 			log.Printf("Error opening index template: %v", err)
 		}
