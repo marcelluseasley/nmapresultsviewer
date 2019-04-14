@@ -1,4 +1,4 @@
-package main
+package nmapserver
 
 import (
 	"database/sql"
@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func createdatabase() {
+func Createdatabase() {
 
 	database, err := sql.Open("sqlite3", "dbtest1.db")
 	if err != nil {
