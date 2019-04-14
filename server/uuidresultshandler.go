@@ -1,4 +1,4 @@
-package main
+package nmapserver
 
 import (
 	"database/sql"
@@ -6,8 +6,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strings"
 
-	"github.com/gorilla/mux"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -39,11 +39,15 @@ type TemplateData struct {
 	Rows map[string][]RowData
 }
 
-func uuidResultsHandler(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
+func UUIDResultsHandler(w http.ResponseWriter, r *http.Request) {
+
+	uuidR := strings.TrimLeft(r.RequestURI, "/")
+	log.Printf("VALUE: %v", uuidR)
+
 	// if no uuid or uuid not found in database, redirect to index page
-	if vars["uuid"] == "" || !uuidScanLookup(vars["uuid"]) {
-		t, err := template.ParseFiles("templates/index.html")
+	if !uuidScanLookup(uuidR) {
+
+		t, err := template.ParseFiles("server/templates/index.html")
 		if err != nil {
 			log.Printf("Error opening index template: %v", err)
 		}
@@ -67,7 +71,7 @@ SELECT DISTINCT ip
 FROM portdata
 WHERE uuid = '%s'
 ORDER BY ip;
-	`, vars["uuid"]))
+	`, uuidR))
 		if err != nil {
 			log.Fatalf("database query error: %v", err)
 		}
@@ -77,7 +81,7 @@ ORDER BY ip;
 			ips = append(ips, i)
 
 		}
-		fmt.Println(ips)
+
 		TD.Rows = make(map[string][]RowData)
 		for _, ii := range ips {
 			TD.Rows[ii] = []RowData{}
@@ -87,7 +91,7 @@ ORDER BY ip;
 select *
 FROM scandata
 WHERE scandata.uuid = '%s'
-	`, vars["uuid"]))
+	`, uuidR))
 		if err != nil {
 			log.Fatalf("database query error: %v", err)
 		}
@@ -96,7 +100,6 @@ WHERE scandata.uuid = '%s'
 			rowsScan.Scan(&uuidScan, &scanargs, &scanstart, &scantype, &scanprotocol, &scanservices, &scanend, &summary)
 			s := ScanData{uuidScan, scanargs, scanstart, scantype, scanprotocol, scanservices, scanend, summary}
 			TD.Scan = s
-			fmt.Println(s)
 
 		}
 
@@ -120,7 +123,7 @@ WHERE scandata.uuid = '%s'
 		where hostdata.uuid = '%s'
 		AND hostdata.ip = portdata.ip
 		AND hostdata.ip = '%s'
-		ORDER BY ip ASC;`, vars["uuid"], ipr))
+		ORDER BY ip ASC;`, uuidR, ipr))
 
 			if err != nil {
 				log.Fatalf("database query error: %v", err)
@@ -135,7 +138,7 @@ WHERE scandata.uuid = '%s'
 			temp = nil
 		}
 
-		t, err := template.ParseFiles("templates/nmapresults.html")
+		t, err := template.ParseFiles("server/templates/nmapresults.html")
 		if err != nil {
 			log.Printf("Error opening nmapresults template: %v", err)
 		}
